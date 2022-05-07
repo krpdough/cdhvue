@@ -8,8 +8,12 @@
         width="320"
       />
     </router-link>
-    <router-link :to="cardUrl">
-      {{ cardName }} - {{ status }}
+    <router-link 
+      class="card-name"
+      :to="cardUrl"
+    >
+      {{ cardName }} ({{ status }})
+      <br/> muid #{{ cardId }}
     </router-link>
   </div>
 </template>
@@ -28,7 +32,7 @@ export default {
       type: String,
     },
     status: {
-      default: "Playtest",
+      required: true,
       type: String,
     },
     picurl: {
@@ -41,16 +45,20 @@ export default {
       return `/card/${this.cardId}`;
     }
   },
-  created() {
-    console.log("Loaded Commander Card", this.cardName);
-  },
-
 }
 </script>
 
 <style lang='scss'>
   .commander-card-wrapper {
     display: flex;
+    flex-direction: column;
     width: 400px;
+    &:hover {
+      text-decoration: underline;
+    }
+    .card-name {
+      color: grey;
+      text-decoration: none;
+    }
   }
 </style>
