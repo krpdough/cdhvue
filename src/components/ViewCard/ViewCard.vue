@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="$apollo.loading"> 
+    <div v-if="isLoading"> 
       Loading...
     </div>
     <div v-else>
@@ -18,55 +18,11 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import CommanderCard from '../Shared/CommanderCard.vue'
 import DeckDisplay from './DeckDisplay.vue'
 
 export default {
   name: 'ViewCard',
-  apollo: {
-    cards: {
-      query: gql`query singleton($paramId: Int!) {
-        cards(where: {id: $paramId}) {
-          edges {
-            node {
-              cardId
-              cdhCards {
-                name
-                status
-                text
-                token
-                reverseRelated
-                related
-                prop {
-                  cmc
-                  coloridentity
-                  colors
-                  maintype
-                  manacost
-                  pt
-                  side
-                  type
-                }
-                set {
-                  muid
-                  num 
-                  picurl
-                  rarity
-                  uuid
-                }
-              }
-            }
-          }
-        }
-      }`,
-      variables () { 
-        return {
-          paramId: this.paramId
-        } 
-      },
-    },
-  },
   components: {
     CommanderCard,
     DeckDisplay,
@@ -79,9 +35,6 @@ export default {
   },
   computed: {
     cardInfo() {
-      if (this.$apollo.loading) {
-        return {}
-      }
       const card = this.cards.edges[0];
       return {
         cardId: card.node.cardId,

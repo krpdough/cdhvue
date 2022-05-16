@@ -25,7 +25,7 @@ export default {
   props: {
     cardId: {
       required: true,
-      type: Number,
+      type: String,
     },
     cardName: {
       required: true,
