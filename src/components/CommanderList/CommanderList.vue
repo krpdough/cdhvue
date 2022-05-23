@@ -34,8 +34,6 @@ export default {
   data() {
     return {
       cardsInView: 100,
-      sort: 'muid',
-      sortOrder: 'desc',
     };
   },
   computed: {
@@ -56,7 +54,6 @@ export default {
     }
   },
   created() {
-    console.log('at created', this.$store, this.$store.state, this.$store.getters);
     if (!this.cardList.length) {
       this.fetchCards();
     }
