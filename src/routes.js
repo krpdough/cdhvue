@@ -4,8 +4,8 @@ import DeckRec from './components/DeckRec.vue';
 import Faq from './components/Faq.vue';
 
 export const routes=[
+  {path: '/', component: CommmanderList},
   {path: '/card/:id', component: ViewCard},
   {path: '/reccomend/', component: DeckRec},
   {path: '/faq/', component: Faq},
-  {path: '/', component: CommmanderList},
 ];

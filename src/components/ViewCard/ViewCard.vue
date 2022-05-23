@@ -1,16 +1,11 @@
 <template>
   <div>
-    <div v-if="isLoading"> 
-      Loading...
-    </div>
-    <div v-else>
-      <CommanderCard
-        :cardId="cardInfo.cardId"
-        :cardName="cardInfo.cardName"
-        :status="cardInfo.status"
-        :picurl="cardInfo.picurl"
-      />
-    </div>
+    <CommanderCard
+      :cardId="cardInfo.cardId"
+      :cardName="cardInfo.cardName"
+      :status="cardInfo.status"
+      :picurl="cardInfo.picurl"
+    />
     <DeckDisplay
       :cardId="cardInfo.cardId"
     />
@@ -35,12 +30,7 @@ export default {
   },
   computed: {
     cardInfo() {
-      const card = this.cards.edges[0];
       return {
-        cardId: card.node.cardId,
-        cardName: card.node.cdhCards.name,
-        status: card.node.cdhCards.status,
-        picurl: card.node.cdhCards.set.picurl,
       };
     }
   },
