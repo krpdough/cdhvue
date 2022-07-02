@@ -4,7 +4,7 @@
     <CommanderFilters/>
     <div class="card-list-wrapper">
       <div class="card-list">
-        <div class="card" v-for="card in cardList" :key="card.name">
+        <div class="card" v-for="card in cardsToDisplay" :key="card.name">
           <CommanderCard
             :cardId="card.muid"
             :cardName="card.name"
@@ -33,17 +33,24 @@ export default {
   },
   data() {
     return {
-      cardsInView: 100,
+      cardsInView: 5,
     };
   },
   computed: {
     ...mapGetters({
-      cardList: 'cards/GET_CARD_LIST',
+      filteredList: 'cards/GET_FILTERED_LIST',
     }),
+    cardsToDisplay() {
+      if (this.filteredList) {
+        return this.filteredList.slice(0, this.cardsInView);
+      }
+      return [];
+    },
   },
   methods: {
     ...mapActions({
       fetchCards: 'cards/FETCH_CARDS',
+      buildIndex: 'cards/BUILD_INDEX',
     }),
 
     cleanStatus(status) {
@@ -54,8 +61,9 @@ export default {
     }
   },
   created() {
-    if (!this.cardList.length) {
+    if (!this.filteredList.length) {
       this.fetchCards();
+      this.buildIndex();
     }
   },
 }

@@ -11,8 +11,10 @@
     "axios": "^0.24.0",
     "fast-xml-parser": "^4.0.7",
     "lunr": "^2.3.9",
+    "mana-font": "^1.14.0",
     "vue": "^2.6.11",
     "vue-router": "^3.5.3",
+    "vuetify": "^2.6.6",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
