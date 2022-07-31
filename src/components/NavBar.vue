@@ -10,7 +10,7 @@
       <router-link to="/reccomend"><span>Recommend A Deck</span></router-link>
       <router-link to="/faq"><span>Resrouces & FAQ</span></router-link>
       <span>Discord</span>
-      <span>Dark Mode</span>
+      <v-btn @click="toggleMode">{{ buttonText }}</v-btn>
     </div>
   </div>
 </template>
@@ -18,7 +18,30 @@
 <script>
 export default {
   name: 'NavBar',
-
+  data() {
+    return {
+      darkMode: true,
+    }
+  },
+  computed: {
+    buttonText() {
+      return this.darkMode ? 'Light Mode' : 'Dark Mode';
+    }
+  },
+  methods: {
+    isDarkMode() {
+      return Boolean(localStorage.getItem('dark-mode'));
+    },
+    toggleMode() {
+      this.darkMode = !this.darkMode;
+      localStorage.setItem('dark-mode', this.darkMode);
+      document.documentElement.className = this.darkMode ? 'dark-theme' : 'light-theme';
+    },
+  },
+  created() {
+    this.darkMode = this.isDarkMode();
+    document.documentElement.className = this.darkMode ? 'dark-theme' : 'light-theme';
+  }
 }
 </script>
 
@@ -29,7 +52,6 @@ export default {
   display: flex;
   padding: 0.5rem;
   z-index: 10;
-  position: fixed;
   background: #2b2d2e;
   justify-content: center;
   margin-bottom: 25px;

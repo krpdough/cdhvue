@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class='card-info'>
+    <div class='card-info' v-if="Object.entries(this.cardDict).length > 0">
       <CommanderCard
         :cardId="cardInfo.muid"
         :cardName="cardInfo.name"
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import CommanderCard from '../Shared/CommanderCard.vue'
 import CardDetails from './CardDetails.vue'
 import DeckDisplay from './DeckDisplay.vue'
@@ -44,9 +44,17 @@ export default {
       return this.cardDict[this.paramId];
     }
   },
+  methods: {
+    ...mapActions({
+      getSingle: 'cards/FETCH_SINGLE',
+    })
+  },
+
   created() {
-    
-    console.log("View card will be used when someone clicks on a commander");
+    // For users sharing a link or opening in a new tab, grab just the single commander
+    if (Object.entries(this.cardDict).length === 0) {
+      this.getSingle(this.paramId);
+    }
   },
 
 }
@@ -55,6 +63,7 @@ export default {
 <style lang='scss'>
 .card-info {
   display: flex;
+  justify-content: center;
 }
 
 </style>

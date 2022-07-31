@@ -71,6 +71,20 @@ const actions = {
     dispatch('BUILD_INDEX');
   },
 
+  FETCH_SINGLE: async ({ commit }, cardId) => {
+    let cardDict = {}
+    await axios.get(`https://s3.us-east-2.amazonaws.com/com.cdhrec/cards/${cardId}.json`)
+    .then((response) => {
+      cardDict = {
+        [cardId]: response.data,
+      };
+    })
+    .catch(function (error) {
+      console.log('error is', error);
+    });
+    commit('SET_CARD_DICT', cardDict);
+  },
+
   BUILD_INDEX: ({ commit, state }) => {
     commit('SET_SEARCH_INDEX', lunr(function() {
         this.ref('muid')

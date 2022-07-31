@@ -132,7 +132,7 @@ export default {
 .filter-wrapper {
   width: 80%;
   margin: auto;
-  background: #808080;
+  background-color: var(--background-color-secondary);
   display: flex;
   overflow: wrap;
   .search-button {

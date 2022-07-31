@@ -37,7 +37,7 @@ export default {
   width: 700px;
   display: flex;
   flex-direction: column;
-  background: #F8F0E3;
+  background-color: var(--background-color-secondary);
   .card-name {
     font-size: 2rem;
     font-weight: bold;
