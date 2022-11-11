@@ -30,7 +30,7 @@ const mutations = {
   },
   SET_FILTERED_LIST: (thisState, filteredList) => {
     if (thisState.order === 'desc') {
-      filteredList.sort((a, b) => Number(a.muid) - Number(b.muid))
+      filteredList.sort((a, b) => Number(a.num) - Number(b.num))
 
     } else if (thisState.order === 'r') {
       for (let i = filteredList.length - 1; i > 0; i--) {
@@ -38,7 +38,7 @@ const mutations = {
         filteredList.sort(() => Math.random() - 0.5);
       }
     } else {
-      filteredList.sort((a, b) => Number(b.muid) - Number(a.muid))
+      filteredList.sort((a, b) => Number(b.num) - Number(a.num))
     }
     thisState.filteredList = filteredList;
   },
@@ -66,7 +66,7 @@ const actions = {
     }
     commit('SET_CARD_DICT', cardDict);
     // We will also set the filter to be EVERYTHING as there can be no input yet
-    commit('SET_FILTERED_LIST', Object.keys(cardDict).map((c) => cardDict[c]).sort((a, b) => Number(b.muid) - Number(a.muid)));
+    commit('SET_FILTERED_LIST', Object.keys(cardDict).map((c) => cardDict[c]).sort((a, b) => Number(b.num) - Number(a.num)));
     // Finally, we build the lunr index for searching
     dispatch('BUILD_INDEX');
   },
@@ -85,9 +85,23 @@ const actions = {
     commit('SET_CARD_DICT', cardDict);
   },
 
+  GENERATE_XML: async () => {
+    await axios.post(`https://fu6z6zzz2aoz4c33n2b2i5o5vy0dwqjn.lambda-url.us-east-1.on.aws/`, {}, {
+      headers: {
+        'content-type': 'text/json',
+      }
+    })
+    .then((response) => {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log('error is', error);
+    });
+  },
+
   BUILD_INDEX: ({ commit, state }) => {
     commit('SET_SEARCH_INDEX', lunr(function() {
-        this.ref('muid')
+        this.ref('uuid')
         this.field('name')
         this.field('text')
         this.field('type')
@@ -138,6 +152,24 @@ const actions = {
   SET_ORDER: ({commit, state}, order) => {
     commit('SET_ORDER', order);
     commit('SET_FILTERED_LIST', state.filteredList);
+  },
+
+  SEND_UPDATE: async ({commit, state}, card) => {
+    await axios.post(`https://ghxbxu4kyne7g5bvx2m6drc2ri0uqyom.lambda-url.us-east-1.on.aws/`, card, {
+      headers: {
+        'content-type': 'text/json',
+      }
+    })
+    .then((response) => {
+      const newDict = state.cardDict
+      newDict[card] = card;
+      console.log(response)
+      commit('SET_CARD_DICT', newDict);
+    })
+    .catch(function (error) {
+      console.log('error is', error);
+    });
+    
   },
 };
 

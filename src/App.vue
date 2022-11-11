@@ -6,12 +6,30 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import NavBar from './components/NavBar.vue';
 
 export default {
   name: 'App',
   components: {
     NavBar,
+  },
+  computed: {
+    ...mapGetters({
+      filteredList: 'cards/GET_FILTERED_LIST',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      fetchCards: 'cards/FETCH_CARDS',
+      buildIndex: 'cards/BUILD_INDEX',
+    }),
+  },
+  created() {
+    if (!this.filteredList.length) {
+      this.fetchCards();
+      this.buildIndex();
+    }
   },
 }
 </script>

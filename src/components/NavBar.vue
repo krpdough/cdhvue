@@ -1,16 +1,17 @@
 <template>
   <div class="navbar">
-    <router-link to="/">
+    <router-link to="/" class='icon-wrapper'>
       <img 
         class="icon"
         src="../../public/favicon.svg"
       />
     </router-link>
-    <div class="tabs">
-      <router-link to="/reccomend"><span>Recommend A Deck</span></router-link>
-      <router-link to="/faq"><span>Resrouces & FAQ</span></router-link>
-      <span>Discord</span>
-      <v-btn @click="toggleMode">{{ buttonText }}</v-btn>
+    <div class="nav-tabs">
+      <router-link to="/reccomend" class='tab-title'><span>Recommend A Deck</span></router-link>
+      <router-link to="/faq" class='tab-title'><span>Resrouces & FAQ</span></router-link>
+      <router-link v-if="isVerified" to="/edit" class='tab-title'><span>Admin</span></router-link>
+      <span class='tab-title'>Discord</span>
+      <v-btn class='toggle-button' @click="toggleMode">{{ buttonText }}</v-btn>
     </div>
   </div>
 </template>
@@ -21,6 +22,7 @@ export default {
   data() {
     return {
       darkMode: true,
+      isVerified: false,
     }
   },
   computed: {
@@ -41,6 +43,7 @@ export default {
   created() {
     this.darkMode = this.isDarkMode();
     document.documentElement.className = this.darkMode ? 'dark-theme' : 'light-theme';
+    this.isVerified = Boolean(localStorage.getItem('verified'));
   }
 }
 </script>
@@ -53,13 +56,24 @@ export default {
   padding: 0.5rem;
   z-index: 10;
   background: #2b2d2e;
-  justify-content: center;
   margin-bottom: 25px;
-  .icon {
-    width: 3.125rem;
-    height: 3.125rem;
-    overflow: hidden;
-    border-radius: 50%;
+  justify-content: space-between;
+  .icon-wrapper {
+    .icon {
+      width: 3.125rem;
+      height: 3.125rem;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+  }
+  .nav-tabs {
+    .tab-title {
+      color: var(--text-primary-color);
+      margin: 8px;
+    }
+    .toggle-button {
+      margin: 8px;
+    }
   }
 }
 </style>

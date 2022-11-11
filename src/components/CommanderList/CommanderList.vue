@@ -6,7 +6,7 @@
       <div class="card-list">
         <div class="card" v-for="card in cardsToDisplay" :key="card.name">
           <CommanderCard
-            :cardId="card.muid"
+            :cardId="card.uuid"
             :cardName="card.name"
             :status="card.status"
             :picurl="card.picurl"
@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import CommanderCard from '../Shared/CommanderCard.vue'
-import CommanderFilters from './CommanderFilters.vue'
+import CommanderFilters from '../Shared/CommanderFilters.vue'
 import TitleSection from './TitleSection.vue'
 
 export default {
@@ -48,22 +48,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions({
-      fetchCards: 'cards/FETCH_CARDS',
-      buildIndex: 'cards/BUILD_INDEX',
-    }),
-
     cleanStatus(status) {
       return status ? status : "Playtesting";
     },
     loadMore() {
       this.cardsInView += 100;
-    }
-  },
-  created() {
-    if (!this.filteredList.length) {
-      this.fetchCards();
-      this.buildIndex();
     }
   },
 }

@@ -2,7 +2,7 @@
   <div>
     <div class='card-info' v-if="Object.entries(this.cardDict).length > 0">
       <CommanderCard
-        :cardId="cardInfo.muid"
+        :cardId="cardInfo.uuid"
         :cardName="cardInfo.name"
         :status="cardInfo.status"
         :picurl="cardInfo.picurl"
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       // paramId: this.$route.paramId,
-      paramId: parseInt(this.$route.params.id, 10),
+      paramId: this.$route.params.id,
     }
   },
   computed: {

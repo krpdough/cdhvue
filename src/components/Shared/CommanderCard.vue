@@ -13,7 +13,7 @@
       :to="cardUrl"
     >
       {{ cardName }} ({{ status }})
-      <br/> muid #{{ cardId }}
+      <br/> num #{{ cardId }}
     </router-link>
   </div>
 </template>
