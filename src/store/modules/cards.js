@@ -162,9 +162,14 @@ const actions = {
     })
     .then((response) => {
       const newDict = state.cardDict
-      newDict[card] = card;
+      if (card.method === 'delete') {
+        delete newDict[card.card.uuid];
+      } else {
+        newDict[card.card.uuid] = card.card;
+      }
       console.log(response)
       commit('SET_CARD_DICT', newDict);
+      commit('SET_FILTERED_LIST', Object.keys(newDict).map((c) => newDict[c]).sort((a, b) => Number(b.num) - Number(a.num)));
     })
     .catch(function (error) {
       console.log('error is', error);

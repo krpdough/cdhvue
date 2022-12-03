@@ -212,7 +212,6 @@ export default {
     },
 
     submitCard() {
-      console.log('Submitting');
       const post_card = {
         method: 'update',
         card: this.card,

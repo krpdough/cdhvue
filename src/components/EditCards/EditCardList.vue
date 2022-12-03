@@ -2,14 +2,23 @@
   <div class='edit-wrapper'>
     <CommanderFilters/>
     <div class='card-list'>
-      <router-link 
+      <div
         v-for="card in cardsToDisplay" 
         :key="card.uuid"
-        class='list-item'
-        :to="`edit/${card.uuid}`" 
+        class='card-list-item'
       >
-        {{ card.num}} - {{ card.name }}
-      </router-link>
+        <router-link 
+          class='item-link'
+          :to="`edit/${card.uuid}`" 
+        >
+          {{ card.num}} - {{ card.name }}
+        </router-link>
+        <img 
+          class="icon"
+          src="../../assets/trash.svg"
+          @click="clickDelete(card.uuid)"
+        />
+      </div>
     </div>
     <div class='actions-wrapper'>
       <v-btn><router-link to="edit/new" class='add-new'>+ Add New Card</router-link></v-btn>
@@ -31,11 +40,24 @@
         />
         <div>
           <router-link to="/">
-            <v-btn class='leave-button'>Back to Homepage</v-btn>
+            <v-btn class='dialog-button'>Back to Homepage</v-btn>
           </router-link>
-          <v-btn class='continue-button' @click="checkPass">Continue</v-btn>
+          <v-btn class='dialog-button' @click="checkPass">Continue</v-btn>
         </div>
       </div>
+    </v-dialog>
+    <v-dialog
+      v-model="deleteWarning"
+      persistent
+      max-width="450"
+    >
+    <div class='warning-dialog'>
+      Are you sure you want to delete {{ deleteeName }}?
+      <div class=''>
+      <v-btn class='dialog-button' @click="sendDelete">Delete</v-btn>
+      <v-btn class='dialog-button' @click="clearDelete">Cancel</v-btn>
+      </div>
+    </div>
     </v-dialog>
   </div>
 </template>
@@ -51,6 +73,8 @@ export default {
   },
   data() {
     return {
+      cardToDelete: null,
+      deleteWarning: false,
       pass: '',
       showWarning: true,
     };
@@ -65,11 +89,22 @@ export default {
       }
       return [];
     },
+    deleteeName() {
+      if (this.cardToDelete) {
+        return this.cardToDelete.name;
+      }
+      return '';
+    }
   },
   methods: {
     ...mapActions({
       generateXML: 'cards/GENERATE_XML',
+      sendUpdate: 'cards/SEND_UPDATE',
     }),
+    clearDelete() {
+      this.cardToDelete = null;
+      this.deleteWarning = false;
+    },
     checkPass() {
       console.log(this.pass);
       // TODO - this is temporary. When we go live, this must move to either a lambda or config file hidden from git
@@ -80,8 +115,22 @@ export default {
         this.$router.push({ path: '/' });
       }
     },
+    clickDelete(uuid) {
+      // Warning message only
+      this.cardToDelete = this.cardsToDisplay.find(card => card.uuid === uuid);
+      this.deleteWarning = true;
+    },
     clickGenerate() {
       this.generateXML();
+    },
+    sendDelete() {
+      const post_card = {
+        method: 'delete',
+        card: this.cardToDelete,
+        id: this.cardToDelete.uuid,
+      }
+      this.sendUpdate(post_card);
+      this.clearDelete();
     }
   },
   created() {
@@ -97,13 +146,22 @@ export default {
     background-color: var(--background-color-secondary);
     display: flex;
     flex-direction: column;
-    width: 80%;
     margin: auto;
-    .list-item {
+    width: 80%;
+    .card-list-item {
+      display: flex;
+      margin: auto;
+    }
+    .item-link {
       margin: 5px;
       color: var(--text-primary-color);
       font-weight: bold;
       text-decoration: none;
+    }
+    .icon {
+      width: 18px;
+      height: 25px;
+      margin-left: 15px;
     }
   }
   .actions-wrapper {
@@ -125,6 +183,10 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 40px;
+  gap: 30px;
+  .dialog-button {
+    margin: 10px;
+  }
 }
 
 </style>
