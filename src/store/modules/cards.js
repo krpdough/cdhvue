@@ -126,7 +126,7 @@ const actions = {
       // No need to add things that have no value
       if (value && key != 'inclusive') {
         // Color Identity is split out for inclusive and exclusive
-        if (key == 'coloridentity') {
+        if (key === 'coloridentity') {
           for(let [color, v] of Object.entries(value)) {
             let operator = v ? '+' : '-';
             // For inclusive searches, include only the + colors
@@ -136,6 +136,9 @@ const actions = {
               query = `${operator}${key}:*${color}* ${query}`;
             }
           }
+        } else if (key === 'name') {
+          // Give leeway to names
+          query = `+${key}:*${value}* ${query}`;
         } else {
           query = `+${key}:${value} ${query}`;
         }

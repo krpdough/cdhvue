@@ -6,7 +6,6 @@
         v-model="genericSearch"
         label='Search'
         clearable
-        @change="addSearch"
       />
     </div>
     <div class='mana-filters'>
@@ -54,7 +53,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import 'mana-font';
 
 export default {
@@ -69,7 +68,6 @@ export default {
         'G': false,
         'C': false,
       },
-      genericSearch: '',
       manaList: ['W', 'U', 'B', 'R', 'G', 'C'],
       order: 'Newest First',
       sortOrder: [
@@ -90,17 +88,30 @@ export default {
       },
     };
   },
+
+  computed: {
+    ...mapGetters({
+      getFilters: 'cards/GET_FILTERS',
+    }),
+    genericSearch: {
+      get() {
+        return this.getFilters.name;
+      },
+      set(value) {
+        this.setFilters({
+          key: 'name', 
+          value: value ? `${value}` : null,
+        });
+      }
+    },
+  },
+
   methods: {
     ...mapActions({
       setFilters: 'cards/SET_FILTERS',
       setOrder: 'cards/SET_ORDER',
+      setSearchTerms: 'cards/SET_SEARCH_TERMS',
     }),
-    addSearch() {
-      this.setFilters({
-        key: 'name', 
-        value: this.genericSearch ? `*${this.genericSearch}*` : null,
-      });
-    },
     hasColor(color) {
       return this.colorFilter.find((c) => c===color);
     },
@@ -124,7 +135,6 @@ export default {
       this.setOrder(this.order);
     },
   },
-
 }
 </script>
 
