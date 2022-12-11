@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      cardsInView: 5,
+      cardsInView: 6,
     };
   },
   computed: {
@@ -65,6 +65,9 @@ export default {
     .card-list {
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
+      margin: auto;
+      width: 80%;
       .card {
         margin: 10px;
       }

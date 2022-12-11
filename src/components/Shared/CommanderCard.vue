@@ -13,7 +13,6 @@
       :to="cardUrl"
     >
       {{ cardName }} ({{ status }})
-      <br/> num #{{ cardId }}
     </router-link>
   </div>
 </template>
@@ -52,7 +51,7 @@ export default {
   .commander-card-wrapper {
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 330px;
     &:hover {
       text-decoration: underline;
     }

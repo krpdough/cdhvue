@@ -10,8 +10,8 @@
       <router-link to="/reccomend" class='tab-title'><span>Recommend A Deck</span></router-link>
       <router-link to="/faq" class='tab-title'><span>Resrouces & FAQ</span></router-link>
       <router-link v-if="isVerified" to="/edit" class='tab-title'><span>Admin</span></router-link>
-      <span class='tab-title'>Discord</span>
-      <v-btn class='toggle-button' @click="toggleMode">{{ buttonText }}</v-btn>
+      <a href="https://discord.com/invite/T296j3Mw8K" class='tab-title'>Discord</a>
+      <span class='tab-title' @click="toggleMode">{{ buttonText }}</span>
     </div>
   </div>
 </template>
@@ -67,9 +67,11 @@ export default {
     }
   }
   .nav-tabs {
+    margin: auto 0;
     .tab-title {
       color: var(--text-primary-color);
       margin: 8px;
+      text-decoration: none;
     }
     .toggle-button {
       margin: 8px;
