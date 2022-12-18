@@ -12,7 +12,8 @@
       />
     </div>
     <DeckDisplay
-      :cardId="cardInfo.cardId"
+      v-if="Object.entries(this.cardDict).length > 0"
+      :cardId="cardInfo.uuid"
     />
   </div>
 </template>

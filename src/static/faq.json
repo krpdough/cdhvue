@@ -1,0 +1,70 @@
+{
+  "faqItems": [
+    {
+      "title": "What does \"Playtesting\" and \"Approved\" mean?",
+      "text": "\"Playtesting\" means that the card is in the playtesting phase in the Discord. <br><br>\"Approved\" means that it has been approved by the Discord community and is permanently part of the list."
+    },
+    {
+      "title": "I want to host an ad/affiliate link here!",
+      "text": "Cool! Shoot us a message on the discord server to @Website Help"
+    },
+    {
+      "title": "I have a YT channel/instagram etc. Can I get featured here?",
+      "text": "Absolutely! Shoot us a message on the discord server to @Website Help"
+    },
+    {
+      "title": "Hey! There's an error with my card!",
+      "text": "Thanks for keeping an eye out! Let us know in the Discord channel #resource-help and we'll address it with the next update.<br><br>If your card image is low resolution or missing, it's likely due to an error with Discord (potentially due to the card moving between channels). Let us know and we'll update the link."
+    },
+    {
+      "title": "These cards are awesome! How do I play with them?",
+      "text": "You can download the XML file(s) and play on any of the platforms, like Cockatrice or Untap, that are listed in the resources section.<br><br>If you want to play with cardboard, simply download the image of the card you want, print it out, and stick it on a spare card!"
+    },
+    {
+      "title": "I want ___ as a new feature!",
+      "text": "CDHrec is a work in progress and is run by volunteers. More features to the site will come but require a lot of work to implement. We always appreciate feedback, and if you're a dev and want to put in the work yourself join the discord and introduce yourself in the #resouce-help. Otherwise, post your suggestions in the #feedback with @Website Help"
+    },
+    {
+      "title": "I'm a dev and I want to help you with the site!",
+      "text": "Great! Join the discord and introduce yourself in the #resource-help channel, tagging @Website Help."
+    },
+    {
+      "title": "How do I get my commander on this list?",
+      "text": "Join our Discord, and follow these steps:<br><br>1. Post your card in an empty build room to fix and syntax or balance issues. Posting more than once, at different times of day, gives you the best chance to get feedback.<br>2. Once you're happy with the card, post it on #submissions. You can only have 1 card in there at a time, and it's hard to get it removed, so make sure both you and the community like it before posting it. You can also post 1 fixed version of a card in #rework.<br>3. If your card gets enough votes, it gets moved to #playtesting, where everyone can try it out.<br>4. Eventually, it'll be approved. It'll be added to the CDH XML file, and then to this site on its next update."
+    },
+    {
+      "title": "Where do I find art?",
+      "text": "Here are some useful resources. Remember to always credit the original artist!<br><br>*ArtStation - Great source for professional art<br>*DeviantArt/Pinterest - Both have some good pieces, but they don't always have artist credits<br>*The #art-dump channel in the Discord - Community members sometimes put art they find in here. Just check #art-dibs first to make sure nobody's already claimed it.<br>*If all else fails, ask in #art-requests for some help"
+    },
+    {
+      "title": "How do I make a card?",
+      "text": "We use Magic Set Editor and mtg.design to make our cards. The #resources channel has lots of useful information, and don't be afraid to #ask-for-help!"
+    }
+  ],
+  "resources": [
+    {
+      "icon": "https://mtg.design/img/skyclave_plunder.jpg",
+      "title": "MTG.Design",
+      "text": "Create custom Magic cards right from your web browser",
+      "link": "https://mtg.design/"
+    },
+    {
+      "icon": "https://cockatrice.us/img/servatrice.png",
+      "title": "Cockatrice",
+      "text": "A cross-platform virtual tabletop for multiple card games",
+      "link": "https://cockatrice.github.io/"
+    },
+    {
+      "icon": "https://res.cloudinary.com/daijdjan/image/upload/v1521555837/mythic.gif",
+      "title": "Magic Set Editor",
+      "text": "Create card with a high level of customization",
+      "link": "https://magicseteditor.boards.net/page/downloads"
+    },
+    {
+      "icon": "https://untap.in/static/img/untap.7e4f6b81.svg",
+      "title": "Untap.in",
+      "text": "A cross-platform web-browser interface to play MTG",
+      "link": "https://untap.in/"
+    }
+  ]
+}
