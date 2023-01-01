@@ -4,9 +4,7 @@ import lunr from 'lunr'
 const initialState = () => ({
   cardDict: [],
   filteredList: [],
-  filters: {
-    inclusive: true,
-  },
+  filters: {},
   order: 'asc',
   searchIndex: null,
 });
@@ -124,23 +122,22 @@ const actions = {
     let query = ''
     for(let [key, value] of Object.entries(newFilter)) {
       // No need to add things that have no value
-      if (value && key != 'inclusive') {
+      if (value) {
         // Color Identity is split out for inclusive and exclusive
         if (key === 'coloridentity') {
           for(let [color, v] of Object.entries(value)) {
             let operator = v ? '+' : '-';
-            // For inclusive searches, include only the + colors
-            if (newFilter['inclusive'] && v) {
-              query = `${operator}${key}:*${color}* ${query}`;
-            } else {
-              query = `${operator}${key}:*${color}* ${query}`;
-            }
+            query = `${operator}${key}:*${color}* ${query}`;
           }
         } else if (key === 'name') {
           // Give leeway to names
           query = `+${key}:*${value}* ${query}`;
         } else {
-          query = `+${key}:${value} ${query}`;
+          let splitValue = value.split(' ');
+          splitValue.forEach(term => {
+            // query = `+${key}:${term.replace(/[s]$/, '')} ${query}`;
+            query = `+${key}:${term} ${query}`;
+          })
         }
       }
     } 

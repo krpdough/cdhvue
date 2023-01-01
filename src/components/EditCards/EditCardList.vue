@@ -52,7 +52,7 @@
       max-width="450"
     >
     <div class='warning-dialog'>
-      Are you sure you want to delete {{ deleteeName }}?
+      Are you sure you want to delete {{ deleteName }}?
       <div class=''>
       <v-btn class='dialog-button' @click="sendDelete">Delete</v-btn>
       <v-btn class='dialog-button' @click="clearDelete">Cancel</v-btn>
@@ -89,7 +89,7 @@ export default {
       }
       return [];
     },
-    deleteeName() {
+    deleteName() {
       if (this.cardToDelete) {
         return this.cardToDelete.name;
       }

@@ -1,9 +1,10 @@
 <template>
   <div class='filter-wrapper'>
+    <div class='basic-filters'>
     <div>
       <v-text-field
         class='search-button'
-        v-model="genericSearch"
+        v-model="nameSearch"
         label='Search'
         clearable
       />
@@ -50,14 +51,33 @@
       />
     </div>
   </div>
+  <div class='advanced-filters'>
+    <v-expansion-panels>
+      <v-expansion-panel>
+        <v-expansion-panel-header class='advanced-filters__header'>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content class='advanced-filters__content'>
+          <AdvancedFilters/>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </div>
+</div>
+  
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import AdvancedFilters from './AdvancedFilters.vue';
 import 'mana-font';
 
 export default {
   name: 'CommanderFilter',
+
+  components: {
+    AdvancedFilters,
+  },
+
   data() {
     return {
       colorFilter: {
@@ -93,7 +113,7 @@ export default {
     ...mapGetters({
       getFilters: 'cards/GET_FILTERS',
     }),
-    genericSearch: {
+    nameSearch: {
       get() {
         return this.getFilters.name;
       },
@@ -144,33 +164,50 @@ export default {
   margin: auto;
   background-color: var(--background-color-secondary);
   display: flex;
+  flex-direction: column;
   overflow: wrap;
-  .search-button {
-    width: 300px;
-    margin: 10px;
-  }
-  .mana-filters {
-    margin: 10px;
-    .mana-button {
-      margin: 5px;
-    }
-    .icon-height {
-      line-height: unset;
-    }
-    .selected {
-      background: #8686e7;
-    }
-  }
-  .filters__checkboxes {
-    margin: 10px;
+  .basic-filters {
     display: flex;
-    color: blue;
-    .filters__checkbox {
-      margin-right: 5px;
+    .search-button {
+      width: 300px;
+      margin: 10px;
+    }
+    .mana-filters {
+      margin: 10px;
+      padding-top: 10px;
+      .mana-button {
+        margin: 5px;
+      }
+      .icon-height {
+        line-height: unset;
+      }
+      .selected {
+        background: #8686e7;
+      }
+    }
+    .filters__checkboxes {
+      margin: 10px;
+      display: flex;
+      color: blue;
+      .filters__checkbox {
+        margin-right: 5px;
+      }
+    }
+    .filters__sorting {
+      margin: 10px;
     }
   }
-  .filters__sorting {
-    margin: 10px;
+  .advanced-filters {
+    .advanced-filters__header {
+      background-color: var(--background-color-secondary);
+      border-radius: 0px;
+      place-content: center;
+      padding: 0px;
+      min-height: unset;
+    }
+    .advanced-filters__content {
+      background-color: var(--background-color-secondary);
+    }
   }
 }
 
