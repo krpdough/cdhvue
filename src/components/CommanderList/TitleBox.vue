@@ -53,4 +53,10 @@ export default {
     margin: 10px;
   }
 }
+@media only screen and (max-width: 720px) {
+  .title-box {
+    margin-left: unset;
+    margin: 5px;
+  }
+}
 </style>

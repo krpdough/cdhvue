@@ -87,5 +87,9 @@ export default {
     text-align: right;
   }
 }
-
+@media only screen and (max-width: 720px) {
+  .card-info-panel {
+    width: auto;
+  }
+}
 </style>

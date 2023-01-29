@@ -63,4 +63,22 @@ export default {
     display: flex;
   }
 }
+@media only screen and (max-width: 720px) {
+  .title-section {
+    display: flex;
+    flex-direction: column;
+    .info-banner {
+      text-align: center;
+      margin-right: unset;
+      margin: auto;
+    }
+    .info-title {
+      align-self: center;
+    }
+    .title-boxes {
+      margin: auto;
+      width: 100%;
+    }
+  }
+}
 </style>

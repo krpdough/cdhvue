@@ -13,6 +13,40 @@
       <a href="https://discord.com/invite/T296j3Mw8K" class='tab-title'>Discord</a>
       <span class='tab-title' @click="toggleMode">{{ buttonText }}</span>
     </div>
+    <v-app-bar-nav-icon class="moble-nav-menu" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-navigation-drawer
+      v-model="drawer"
+      class="mobile-items"
+      absolute
+      dark
+      right
+      temporary
+    >
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          v-model="group"
+        >
+          <v-list-item>
+            <v-list-item-title><router-link to="/reccomend" class='tab-title'><span>Recommend A Deck</span></router-link></v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title><router-link to="/faq" class='tab-title'><span>Resrouces & FAQ</span></router-link></v-list-item-title>
+          </v-list-item>
+          <v-list-item v-if="isVerified">
+            <v-list-item-title><router-link v-if="isVerified" to="/edit" class='tab-title'><span>Admin</span></router-link></v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title><a href="https://discord.com/invite/T296j3Mw8K" class='tab-title'>Discord</a></v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title><span class='tab-title' @click="toggleMode">{{ buttonText }}</span></v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
   </div>
 </template>
 
@@ -22,7 +56,9 @@ export default {
   data() {
     return {
       darkMode: true,
+      drawer: false,
       isVerified: false,
+      group: null,
     }
   },
   computed: {
@@ -69,12 +105,31 @@ export default {
   .nav-tabs {
     margin: auto 0;
     .tab-title {
-      color: var(--text-primary-color);
+      color: #ddd;
       margin: 8px;
       text-decoration: none;
     }
     .toggle-button {
       margin: 8px;
+    }
+  }
+  .moble-nav-menu {
+    display: none;
+  }
+}
+@media only screen and (max-width: 720px) {
+  .navbar{
+    .nav-tabs {
+      display: none;
+    }
+    .moble-nav-menu {
+      display: block;
+      margin: auto 0;
+    }
+    .tab-title {
+      margin: 10 auto;
+      color: #ddd;
+      text-decoration: none;
     }
   }
 }

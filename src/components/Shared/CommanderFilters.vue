@@ -210,5 +210,10 @@ export default {
     }
   }
 }
+@media only screen and (max-width: 720px) {
+  .basic-filters {
+    flex-direction: column;
+  }
+}
 
 </style>
