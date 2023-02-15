@@ -9,19 +9,10 @@
         clearable
       />
     </div>
-    <div class='mana-filters'>
-      <v-btn
-        v-for="mana in manaList"
-        :key="mana"
-        :class="{'mx-2 mana-button': true, 'selected': colorFilter[mana]}" 
-        fab
-        small
-        color='primary'
-        @click="selectColor(mana)"
-      >
-        <i :class="['ms ms-cost ms-3x icon-height', `ms-${mana.toLowerCase()}`]"></i>
-      </v-btn>
-    </div>
+    <ManaSelection
+      :selectedColors="colorFilter"
+      @clickColor="selectColor"
+    />
     <div data-app class="filters__sorting">
       <v-select
         v-model="order"
@@ -69,6 +60,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import AdvancedFilters from './AdvancedFilters.vue';
+import ManaSelection from './ManaSelection.vue';
 import 'mana-font';
 
 export default {
@@ -76,6 +68,7 @@ export default {
 
   components: {
     AdvancedFilters,
+    ManaSelection,
   },
 
   data() {
@@ -88,7 +81,6 @@ export default {
         'G': false,
         'C': false,
       },
-      manaList: ['W', 'U', 'B', 'R', 'G', 'C'],
       order: 'Newest First',
       sortOrder: [
         {

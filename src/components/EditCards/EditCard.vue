@@ -13,15 +13,35 @@
           class='form-input'
           v-model="card.picurl"
           label='Image URL'
-          clearable
         />
         <v-text-field v-for="field in cardFields"
           :key="field.text"
           class='form-input'
           v-model="card[field.fieldKey]"
           :label='field.text'
-          clearable
         />
+        <div class='form-colors'>
+          <div class='form-color-title'>
+            <div class='form-color-title-span'>Card Colors</div>
+            <v-checkbox
+              v-model="showColorIdentity"
+              color="primary"
+              value="primary"
+              label="Different Color Identity?"
+            />
+          </div>
+          <div class='form-colors-icons'>
+            <ManaSelection
+              :selectedColors="cardColors"
+              @clickColor="selectCardColor"
+            />
+            <ManaSelection
+              v-if="showColorIdentity"
+              :selectedColors="coloridentity"
+              @clickColor="selectColorIdentity"
+            />
+          </div>
+        </div>
         <v-select
           class='form-input'
           v-model="card.rarity"
@@ -68,9 +88,16 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { uuid } from 'vue-uuid'
+import ManaSelection from '../Shared/ManaSelection.vue';
+import colorOrder from '../../static/colorOrder.json';
 
 export default {
   name: 'EditCard',
+
+  components: {
+    ManaSelection,
+  },
+
   data() {
     return {
       buttonText: "Update",
@@ -95,6 +122,23 @@ export default {
         maintype: 'Creature'
       },
       card: {},
+      cardColors: {
+        'W': false,
+        'U': false,
+        'B': false,
+        'R': false,
+        'G': false,
+        'C': false,
+      },
+      coloridentity: {
+        'W': false,
+        'U': false,
+        'B': false,
+        'R': false,
+        'G': false,
+        'C': false,
+      },
+      colorOrder,
       cardFields: [
         {
           text: 'Name*',
@@ -123,14 +167,6 @@ export default {
         }, {
           text: 'CMC*',
           fieldKey: 'cmc',
-          required: true,
-        }, {
-          text: 'Color Colors*',
-          fieldKey: 'colors',
-          required: true,
-        }, {
-          text: 'Color Identity*',
-          fieldKey: 'coloridentity',
           required: true,
         }, {
           text: 'Power/Toughness',
@@ -187,6 +223,7 @@ export default {
       ],
       submitted: false,
       submittedName: '',
+      showColorIdentity: false,
     };
   },
   computed: {
@@ -202,6 +239,36 @@ export default {
       sendUpdate: 'cards/SEND_UPDATE',
     }),
 
+    getColorOrder(color) {
+      const wubrg = 'WUBRG';
+      const unordered = [];
+      // Turn the colors into an array
+      for (const [k, v] of Object.entries(color)) {
+        if(v) {
+          unordered.push(k);
+        }
+      }
+      const numberOfColors = unordered.length;
+      const unorderedString = unordered.join('');
+
+      // For easy ones, just use the wubrg order
+      if (numberOfColors == 1) {
+        return unordered[0];
+      } else if (numberOfColors == 5) {
+        return wubrg;
+      } else if (wubrg.includes(unorderedString)) {
+        return unorderedString;
+      }
+      // For everything else, reference the sheet and compare
+      let orderedColors = '';
+      colorOrder[String(numberOfColors)].forEach(c => {
+        if (unordered.sort().join('') === c.split('').sort().join('')) {
+          orderedColors = c;
+        }
+      })
+      return orderedColors;
+    },
+
     nextCard() {
       const newNum = parseInt(this.card.num, 10);
       this.card = {
@@ -209,9 +276,17 @@ export default {
       };
       this.card.num = newNum + 1;
       this.card.uuid = uuid.v4();
+      Object.keys(this.cardColors).forEach((c) => {
+        this.cardColors[c] = false;
+        this.coloridentity[c] = false;
+      })
     },
 
     submitCard() {
+      // Prepare the color stuff
+      this.card.colors = this.getColorOrder(this.cardColors)
+      this.card.coloridentity = this.showColorIdentity ? this.getColorOrder(this.coloridentity) : this.card.colors
+
       const post_card = {
         method: 'update',
         card: this.card,
@@ -222,6 +297,15 @@ export default {
       this.submittedName = this.card.name;
     },
 
+    selectCardColor(color) {
+      this.cardColors[color] = !this.cardColors[color];
+      this.coloridentity[color] = !this.coloridentity[color];
+    },
+
+    selectColorIdentity(color) {
+      this.coloridentity[color] = !this.coloridentity[color];
+    },
+
   },
   created() {
     this.card = this.cardDict[this.paramId];
@@ -229,6 +313,10 @@ export default {
       this.card = {
         ...this.emptyCard
       };
+    } else {
+      // Extract the Colors objects from the strings
+      [...this.card.coloridentity].forEach(c => this.coloridentity[c] = true);
+      [...this.card.colors].forEach(c => this.cardColors[c] = true);
     }
     this.loading = false; 
   }
@@ -254,6 +342,38 @@ export default {
         margin: 10px;
         height: 250px;
         width: 600px;
+      }
+      .form-colors {
+        width: 100%;
+        margin-top: -25px;
+        .form-color-title {
+          display: flex;
+          flex-direction: row;
+          place-content: space-around;
+          .form-color-title-span {
+            margin-top: 19px;
+            padding-top: 4px;
+          }
+        }
+        .form-colors-icons {
+          display: flex;
+          flex-direction: row;
+          place-content: space-around;
+          .mana-filters {
+            margin-top: -25px;
+            .mana-button {
+              background-color: var(--background-color-primary);
+              height: 50px;
+              width: 50px;
+            }
+            .icon-height {
+              line-height: unset;
+            }
+            .selected {
+              background: #F6D262;
+            }
+          }
+        }
       }
     }
     .insert-buttons {

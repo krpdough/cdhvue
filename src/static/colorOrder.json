@@ -1,0 +1,33 @@
+{
+  "2": [
+    "WU",
+    "WB",
+    "UB",
+    "UR",
+    "BR",
+    "BG",
+    "RG",
+    "RW",
+    "GW",
+    "GU"
+  ],
+  "3": [
+    "GWU",
+    "WUB",
+    "UBR",
+    "BRG",
+    "RGW",
+    "WBR",
+    "URG",
+    "BGW",
+    "RWU",
+    "GUB"
+  ],
+  "4": [
+    "WUBR",
+    "UBRG",
+    "BRGW",
+    "RGWU",
+    "GWUB"
+  ]
+}
