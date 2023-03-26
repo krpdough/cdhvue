@@ -32,11 +32,15 @@
     >
       <div class='warning-dialog'>
         <div>
-          WARNING! This page is for CDH STAFF only!<br><br>
-          Enter Passphrase or return to the homepage:
+          Log in or return to the home page:
         </div>
         <v-text-field
+          v-model="username"
+          placeholder="Email"
+        />
+        <v-text-field
           v-model="pass"
+          placeholder="Password"
         />
         <div>
           <router-link to="/">
@@ -64,6 +68,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import CommanderFilters from '../Shared/CommanderFilters.vue'
 
 export default {
@@ -75,6 +80,7 @@ export default {
     return {
       cardToDelete: null,
       deleteWarning: false,
+      username: '',
       pass: '',
       showWarning: true,
     };
@@ -106,14 +112,16 @@ export default {
       this.deleteWarning = false;
     },
     checkPass() {
-      console.log(this.pass);
-      // TODO - this is temporary. When we go live, this must move to either a lambda or config file hidden from git
-      if (this.pass === 'Acorn123') {
-        this.showWarning = false;
-        localStorage.setItem('verified', true);
-      } else {
-        this.$router.push({ path: '/' });
-      }
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, this.username, this.pass)
+        .then((userCredential) => {
+            this.showWarning = false;
+            localStorage.setItem('verified', true);
+            console.log("who dis", userCredential)
+        })
+        .catch((error) => {
+          this.$router.push({ path: '/' });
+        });
     },
     clickDelete(uuid) {
       // Warning message only
@@ -178,8 +186,9 @@ export default {
   }
 }
 .warning-dialog {
-  background: red;
-  height: 300px;
+  background: #2b2d2e;
+  color: #ddd;
+  height: 350px;
   display: flex;
   flex-direction: column;
   padding: 40px;

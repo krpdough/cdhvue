@@ -2,7 +2,7 @@
   <div class='title-box'>
     <img 
       class="icon"
-      :src="require(`../../assets/${icon}.svg`)"
+      :src="imageSrc"
     />
     <span class='title-box__text'>
       {{ text }}
@@ -33,6 +33,12 @@ export default {
       type: String,
     },
   },
+
+  computed: {
+    imageSrc() {
+      return new URL(`../../assets/${this.icon}.svg`, import.meta.url).href
+    },
+  }
 }
 </script>
 

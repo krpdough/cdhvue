@@ -3,7 +3,7 @@
     <router-link to="/" class='icon-wrapper'>
       <img 
         class="icon"
-        src="../../public/favicon.svg"
+        src="../assets/favicon.svg"
       />
     </router-link>
     <div class="nav-tabs">
@@ -33,7 +33,7 @@
             <v-list-item-title><router-link to="/reccomend" class='tab-title'><span>Recommend A Deck</span></router-link></v-list-item-title>
           </v-list-item>
           <v-list-item>
-            <v-list-item-title><router-link to="/faq" class='tab-title'><span>Resrouces & FAQ</span></router-link></v-list-item-title>
+            <v-list-item-title><router-link to="/faq" class='tab-title'><span>Resources & FAQ</span></router-link></v-list-item-title>
           </v-list-item>
           <v-list-item v-if="isVerified">
             <v-list-item-title><router-link v-if="isVerified" to="/edit" class='tab-title'><span>Admin</span></router-link></v-list-item-title>

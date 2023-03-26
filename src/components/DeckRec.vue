@@ -1,6 +1,6 @@
 <template>
-  <div>
-    Upload List page
+  <div class="deck-rec">
+    Returning Soon!
   </div>
 </template>
 
@@ -12,5 +12,8 @@ export default {
 </script>
 
 <style lang="scss">
-
+.deck-rec {
+  margin: 0 auto;
+  font-size: 30px;
+}
 </style>

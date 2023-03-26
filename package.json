@@ -3,30 +3,33 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
+    "@vitejs/plugin-vue": "^4.1.0",
     "axios": "^0.24.0",
-    "fast-xml-parser": "^4.0.7",
+    "firebase": "^9.17.2",
     "lunr": "^2.3.9",
     "mana-font": "^1.14.0",
+    "vite": "^4.2.0",
     "vue": "^2.6.11",
     "vue-router": "^3.5.3",
     "vue-uuid": "^3.0.0",
-    "vuetify": "^2.6.6",
+    "vuetify": "^2.6.14",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-babel": "^4.5.19",
     "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-service": "^4.5.19",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "node-sass": "^5.0.0",
-    "sass-loader": "^10.1.1",
+    "sass": "^1.32.12",
+    "unplugin-vue-components": "^0.24.1",
+    "vite-plugin-vue2": "^2.0.3",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {

@@ -13,7 +13,7 @@
           />
         </div>
       </div>
-      <button @click="loadMore()">Load More</button>
+      <v-btn size="large" @click="loadMore()">Load More</v-btn>
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      cardsInView: 6,
+      cardsInView: 24,
     };
   },
   computed: {
@@ -52,7 +52,7 @@ export default {
       return status ? status : "Playtesting";
     },
     loadMore() {
-      this.cardsInView += 100;
+      this.cardsInView += 60;
     }
   },
 }
