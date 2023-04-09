@@ -117,7 +117,6 @@ export default {
         .then((userCredential) => {
             this.showWarning = false;
             localStorage.setItem('verified', true);
-            console.log("who dis", userCredential)
         })
         .catch((error) => {
           this.$router.push({ path: '/' });

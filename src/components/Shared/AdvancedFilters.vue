@@ -30,7 +30,6 @@ export default {
         return this.getFilters.type;
       },
       set: _.debounce(function(value) {
-        console.log('setting!');
         this.setFilters({
           key: 'type', 
           value: value ? `${value}` : null,

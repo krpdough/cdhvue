@@ -89,8 +89,8 @@ const actions = {
         'content-type': 'text/json',
       }
     })
-    .then((response) => {
-      console.log(response)
+    .then(() => {
+      window.alert("XML Generation Complete")
     })
     .catch(function (error) {
       console.log('error is', error);
@@ -116,7 +116,6 @@ const actions = {
   SET_FILTERS: ({commit, state}, item) => {
     const newFilter = state.filters;
     newFilter[item.key] = item.value;
-    console.log('in set ', newFilter, item);
     commit('SET_FILTERS', newFilter);
     // Now use the lunr_index to filter the list
     let query = ''
@@ -141,11 +140,8 @@ const actions = {
         }
       }
     } 
-
-    console.log('The query is ', query);
     const results = state.searchIndex.search(query)
     const newList = results.map((c) => state.cardDict[c.ref])
-    console.log('Post filtering, we have', newList);
     commit('SET_FILTERED_LIST', newList);
   },
 
@@ -167,7 +163,6 @@ const actions = {
       } else {
         newDict[card.card.uuid] = card.card;
       }
-      console.log(response)
       commit('SET_CARD_DICT', newDict);
       commit('SET_FILTERED_LIST', Object.keys(newDict).map((c) => newDict[c]).sort((a, b) => Number(b.num) - Number(a.num)));
     })

@@ -36,7 +36,6 @@ export default {
         } else if (splitText[i].length > 0) {
           returnText = returnText.concat(`<i class='ms ms-cost icon-height ms-${splitText[i].toLowerCase()}'></i>`);
         }
-        console.log(returnText);
       }
       return returnText;
     },
