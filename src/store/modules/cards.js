@@ -10,6 +10,7 @@ const initialState = () => ({
 });
 
 const getters = {
+  GET_CARD: (thisState, uuid) => thisState.cardDict[uuid],
   GET_CARD_DICT: (thisState) => thisState.cardDict,
   GET_FILTERED_LIST: (thisState) => thisState.filteredList,
   GET_FILTERS: (thisState) => thisState.filters,
@@ -56,10 +57,38 @@ const actions = {
     .catch(function (error) {
       console.log('error is', error);
     });
-    // remove tokens
+    
+    // Edit the whole data
+    const cardDictArray = Object.keys(cardDict);
     for (let key in cardDict) {
+      // Hide Tokens
       if (cardDict[key].type.toLowerCase().includes('token')) {
-        delete cardDict[key];
+        cardDict[key].hidden = true;
+      }
+      // Hide CardBacks
+      if (cardDict[key].side === 'back') {
+        cardDict[key].hidden = true;
+      } else if (cardDict[key].reverseRelated) {
+        let relatedUuid = cardDictArray.find( uuid => cardDict[uuid].name === cardDict[key].reverseRelated[0]);
+        if (relatedUuid) {
+          cardDict[key].relatedUuid = relatedUuid;
+          cardDict[key].relatedPicUrl = cardDict[relatedUuid].picurl;
+        }
+        // Currently, this can be overwritten by the partner pairing below. This is intended for now
+      }
+      if (cardDict[key].related) {
+        // Get link partners and hide the secondary
+        // First one we find is the main one. Find the other's uuid
+        let relatedUuid = cardDictArray.find( uuid => cardDict[uuid].name === cardDict[key].related[0]);
+        console.log('who related ', relatedUuid);
+        // May be null due to error or generic tokens that aren't in the XML
+        if (relatedUuid) {
+          cardDict[relatedUuid].hidden = true;
+          cardDict[key].relatedUuid = relatedUuid;
+          cardDict[key].relatedPicUrl = cardDict[relatedUuid].picurl;
+        } else {
+          console.log('we didnt find...', cardDict[key].name, cardDict[key].related)
+        }
       }
     }
     commit('SET_CARD_DICT', cardDict);
