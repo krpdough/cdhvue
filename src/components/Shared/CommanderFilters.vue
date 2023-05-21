@@ -90,6 +90,9 @@ export default {
           text: 'Oldest First', 
           value: 'desc',
         }, {
+          text: 'Most Decks',
+          value: 'decks',
+        }, {
           text: 'Random',
           value: 'r',
         }

@@ -36,6 +36,8 @@ const mutations = {
         // Math.random() - 0.5 will be positive or negative randomly!
         filteredList.sort(() => Math.random() - 0.5);
       }
+    } else if (thisState.order === 'decks') {
+      filteredList.sort((a, b) => Number(b.deckCount) - Number(a.deckCount))
     } else {
       filteredList.sort((a, b) => Number(b.num) - Number(a.num))
     }
@@ -53,6 +55,16 @@ const actions = {
     await axios.get('https://s3.us-east-2.amazonaws.com/com.cdhrec/data.json')
     .then((response) => {
       cardDict = response.data;
+    })
+    .catch(function (error) {
+      console.log('error is', error);
+    });
+
+    // Grab the decks
+    let deckDict = {}
+    await axios.get('https://s3.us-east-2.amazonaws.com/com.cdhrec/decks.json')
+    .then((response) => {
+      deckDict = response.data;
     })
     .catch(function (error) {
       console.log('error is', error);
@@ -80,15 +92,21 @@ const actions = {
         // Get link partners and hide the secondary
         // First one we find is the main one. Find the other's uuid
         let relatedUuid = cardDictArray.find( uuid => cardDict[uuid].name === cardDict[key].related[0]);
-        console.log('who related ', relatedUuid);
         // May be null due to error or generic tokens that aren't in the XML
         if (relatedUuid) {
           cardDict[relatedUuid].hidden = true;
           cardDict[key].relatedUuid = relatedUuid;
           cardDict[key].relatedPicUrl = cardDict[relatedUuid].picurl;
         } else {
-          console.log('we didnt find...', cardDict[key].name, cardDict[key].related)
+          console.log('Warning - related card not found: ', cardDict[key].name, cardDict[key].related)
         }
+      }
+
+      // Add the deck count
+      if(deckDict[key]) {
+        cardDict[key].deckCount = deckDict[key];
+      } else {
+        cardDict[key].deckCount = 0;
       }
     }
     commit('SET_CARD_DICT', cardDict);

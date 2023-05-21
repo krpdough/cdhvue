@@ -21,7 +21,8 @@
       class="card-name"
       :to="cardUrl"
     >
-      {{ cardName }} ({{ status }})
+      {{ cardName }} ({{ status }})<br>
+      {{ deckCount }} Decks
     </router-link>
   </div>
 </template>
@@ -38,6 +39,10 @@ export default {
     cardName: {
       required: true,
       type: String,
+    },
+    deckCount: {
+      default: 0,
+      type: Number,
     },
     status: {
       required: true,

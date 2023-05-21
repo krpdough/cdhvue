@@ -4,11 +4,12 @@
     <CommanderFilters/>
     <div class="card-list-wrapper">
       <div class="card-list">
-        <div class="card" v-for="card in cardsToDisplay" :key="card.name">
+        <div class="card" v-for="(card, x, i) in cardsToDisplay" :key="i">
           <CommanderCard
             v-if="!card.hidden"
             :cardId="card.uuid"
             :cardName="card.name"
+            :deckCount="card.deckCount"
             :status="card.status"
             :picurl="card.picurl"
             :related="card.relatedPicUrl"

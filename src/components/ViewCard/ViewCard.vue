@@ -4,8 +4,10 @@
       <CommanderCard
         :cardId="cardInfo.uuid"
         :cardName="cardInfo.name"
+        :deckCount="cardInfo.deckCount"
         :status="cardInfo.status"
         :picurl="cardInfo.picurl"
+        :related="cardInfo.relatedPicUrl"
       />
       <CardDetails
         :card="cardInfo"
@@ -14,6 +16,7 @@
     <DeckDisplay
       v-if="Object.entries(this.cardDict).length > 0"
       :cardId="cardInfo.uuid"
+      :deckCount="cardInfo.deckCount"
     />
   </div>
 </template>
@@ -33,7 +36,6 @@ export default {
   },
   data() {
     return {
-      // paramId: this.$route.paramId,
       paramId: this.$route.params.id,
     }
   },
