@@ -19,7 +19,7 @@
           return-object
         ></v-autocomplete>
         <p class="deck-rec__info">
-          List must contain 100 cards: 1 commander and 99 cards (Partners should be put in the 99)<br><br>
+          Deck List must contain 99 cards (Partners should be put in the 99)<br><br>
           Accceptable formats:<br>
           1x Counterspell<br>
           1 Counterspell<br>

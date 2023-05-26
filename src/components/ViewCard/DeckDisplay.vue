@@ -7,9 +7,7 @@
           <v-expansion-panel-header>
             {{ name }}
           </v-expansion-panel-header>
-          <v-expansion-panel-content class="decks__cards-list">
-            {{ formatList(name) }}
-          </v-expansion-panel-content>
+          <v-expansion-panel-content class="decks__cards-list">{{ formatList(name) }}</v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
     </div>
