@@ -177,12 +177,12 @@ const actions = {
           }
         } else if (key === 'name') {
           // Give leeway to names
-          query = `+${key}:*${value}* ${query}`;
+          query = `+${key}:*${value.replaceAll(',', '')}* ${query}`;
         } else {
           let splitValue = value.split(' ');
           splitValue.forEach(term => {
             // query = `+${key}:${term.replace(/[s]$/, '')} ${query}`;
-            query = `+${key}:${term} ${query}`;
+            query = `+${key}:${term.replaceAll(',', '')} ${query}`;
           })
         }
       }

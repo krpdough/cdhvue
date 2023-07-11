@@ -20,28 +20,6 @@
           v-model="card[field.fieldKey]"
           :label='field.text'
         />
-        <div class='form-colors'>
-          <div class='form-color-title'>
-            <div class='form-color-title-span'>Card Colors</div>
-            <v-checkbox
-              v-model="showColorIdentity"
-              color="primary"
-              value="primary"
-              label="Different Color Identity?"
-            />
-          </div>
-          <div class='form-colors-icons'>
-            <ManaSelection
-              :selectedColors="cardColors"
-              @clickColor="selectCardColor"
-            />
-            <ManaSelection
-              v-if="showColorIdentity"
-              :selectedColors="coloridentity"
-              @clickColor="selectColorIdentity"
-            />
-          </div>
-        </div>
         <v-select
           class='form-input'
           v-model="card.rarity"
@@ -66,6 +44,46 @@
           item-value="value"
           label="Status"
         />
+        <div class='form-colors'>
+          <div class='form-color-title'>
+            <div class='form-color-title-span'>Card Colors</div>
+            <v-checkbox
+              v-model="showColorIdentity"
+              color="primary"
+              value="primary"
+              label="Different Color Identity?"
+            />
+          </div>
+          <div class='form-colors-icons'>
+            <ManaSelection
+              :selectedColors="cardColors"
+              @clickColor="selectCardColor"
+            />
+            <ManaSelection
+              v-if="showColorIdentity"
+              :selectedColors="coloridentity"
+              @clickColor="selectColorIdentity"
+            />
+          </div>
+        </div>
+        <v-combobox
+          class='form-input'
+          v-model="card.related"
+          :items="tokens.concat(cardNames)"
+          label="Related"
+          multiple
+          chips
+          deletable-chips
+        ></v-combobox>
+        <v-combobox
+          class='form-input'
+          v-model="card.reverserelated"
+          :items="cardNames"
+          label="Reverse Related"
+          multiple
+          chips
+          deletable-chips
+        ></v-combobox>
         <v-textarea
           class='card-text'
           label='Text'
@@ -122,6 +140,7 @@ export default {
         maintype: 'Creature'
       },
       card: {},
+      cardNames: [],
       cardColors: {
         'W': false,
         'U': false,
@@ -176,14 +195,6 @@ export default {
           text: 'Loyalty',
           fieldKey: 'loyalty',
           required: false,
-        }, {
-          text: 'Related',
-          fieldKey: 'related',
-          required: false,
-        }, {
-          text: 'Reverse Related',
-          fieldKey: 'reverserelated',
-          required: false,
         },
       ],
       paramId: this.$route.params.id,
@@ -224,6 +235,7 @@ export default {
       submitted: false,
       submittedName: '',
       showColorIdentity: false,
+      tokens: ['Treasure Token', 'Food Token', 'Clue Token', 'Copy Token']
     };
   },
   computed: {
@@ -309,6 +321,7 @@ export default {
   },
   created() {
     this.card = this.cardDict[this.paramId];
+    this.cardNames = Object.keys(this.cardDict).map((c) => this.cardDict[c].name)
     if (this.card == null) {
       this.card = {
         ...this.emptyCard
@@ -337,6 +350,12 @@ export default {
       flex-wrap: wrap;
       .form-input {
         margin: 10px;
+        width: 225px;
+      }
+      .form-input-combo {
+        margin: 10px;
+        height: 64px;
+        width: 220px;
       }
       .card-text {
         margin: 10px;
