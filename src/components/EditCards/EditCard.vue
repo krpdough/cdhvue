@@ -235,7 +235,7 @@ export default {
       submitted: false,
       submittedName: '',
       showColorIdentity: false,
-      tokens: ['Treasure Token', 'Food Token', 'Clue Token', 'Copy Token']
+      tokens: ['Treasure Token', 'Food Token', 'Clue Token', 'Copy Token', 'Token: Wicked // Cursed', 'Token: Monster // Sorcerer', 'Token: Royal // Young Hero'],
     };
   },
   computed: {
