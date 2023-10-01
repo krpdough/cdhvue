@@ -111,7 +111,7 @@ const actions = {
     }
     commit('SET_CARD_DICT', cardDict);
     // We will also set the filter to be EVERYTHING as there can be no input yet
-    commit('SET_FILTERED_LIST', Object.keys(cardDict).map((c) => cardDict[c]).sort((a, b) => Number(b.num) - Number(a.num)));
+    commit('SET_FILTERED_LIST', Object.keys(cardDict).map((c) => cardDict[c]));
     // Finally, we build the lunr index for searching
     dispatch('BUILD_INDEX');
   },

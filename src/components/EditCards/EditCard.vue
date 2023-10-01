@@ -13,12 +13,14 @@
           class='form-input'
           v-model="card.picurl"
           label='Image URL'
+          :dark="isDarkMode"
         />
         <v-text-field v-for="field in cardFields"
           :key="field.text"
           class='form-input'
           v-model="card[field.fieldKey]"
           :label='field.text'
+          :dark="isDarkMode"
         />
         <v-select
           class='form-input'
@@ -27,6 +29,7 @@
           item-text="text"
           item-value="value"
           label="Rarity"
+          :dark="isDarkMode"
         />
         <v-select
           class='form-input'
@@ -35,6 +38,7 @@
           item-text="text"
           item-value="value"
           label="Side"
+          :dark="isDarkMode"
         />
         <v-select
           class='form-input'
@@ -43,6 +47,7 @@
           item-text="text"
           item-value="value"
           label="Status"
+          :dark="isDarkMode"
         />
         <div class='form-colors'>
           <div class='form-color-title'>
@@ -52,6 +57,7 @@
               color="primary"
               value="primary"
               label="Different Color Identity?"
+              :dark="isDarkMode"
             />
           </div>
           <div class='form-colors-icons'>
@@ -66,29 +72,13 @@
             />
           </div>
         </div>
-        <v-combobox
-          class='form-input'
-          v-model="card.related"
-          :items="tokens.concat(cardNames)"
-          label="Related"
-          multiple
-          chips
-          deletable-chips
-        ></v-combobox>
-        <v-combobox
-          class='form-input'
-          v-model="card.reverserelated"
-          :items="cardNames"
-          label="Reverse Related"
-          multiple
-          chips
-          deletable-chips
-        ></v-combobox>
+        <v-btn class='form-relation-button' @click="relationDialog = true">Relationship Manager</v-btn>
         <v-textarea
           class='card-text'
           label='Text'
           auto-grow
           v-model="card.text"
+          :dark="isDarkMode"
         />
       </div>
       <div class='insert-buttons'>
@@ -100,6 +90,13 @@
     <div class='xml-output'>
       <code class="block whitespace-pre overflow-x-scroll" v-text="xmlOutput"></code>
     </div>
+    <RelationDialog
+      :cardNames="cardNames"
+      :relationArray="card.related_object"
+      :show="relationDialog"
+      @updateRelation="updateRelation"
+      @close="relationDialog = false"
+    />
   </div>
 </template>
 
@@ -108,12 +105,14 @@ import { mapActions, mapGetters } from 'vuex';
 import { uuid } from 'vue-uuid'
 import ManaSelection from '../Shared/ManaSelection.vue';
 import colorOrder from '../../static/colorOrder.json';
+import RelationDialogVue from './RelationDialog.vue';
 
 export default {
   name: 'EditCard',
 
   components: {
     ManaSelection,
+    RelationDialogVue,
   },
 
   data() {
@@ -232,10 +231,10 @@ export default {
           text: 'Common',
         },
       ],
+      relationDialog: false,
       submitted: false,
       submittedName: '',
       showColorIdentity: false,
-      tokens: ['Treasure Token', 'Food Token', 'Clue Token', 'Copy Token', 'Token: Wicked // Cursed', 'Token: Monster // Sorcerer', 'Token: Royal // Young Hero'],
     };
   },
   computed: {
@@ -244,6 +243,9 @@ export default {
     }),
     xmlOutput() {
       return '';
+    },
+    isDarkMode() {
+      return Boolean(Number(localStorage.getItem('dark-mode')));
     },
   },
   methods: {
@@ -318,6 +320,11 @@ export default {
       this.coloridentity[color] = !this.coloridentity[color];
     },
 
+    updateRelation(relation) {
+      this.card.related_object = relation;
+      this.relationDialog = false;
+    },
+
   },
   created() {
     this.card = this.cardDict[this.paramId];
@@ -345,6 +352,7 @@ export default {
       width: 320px;
     }
     .form {
+      color: var(--text-primary-color);
       display: flex;
       width: 770px;
       flex-wrap: wrap;
@@ -393,6 +401,10 @@ export default {
             }
           }
         }
+      }
+      .form-relation-button {
+        margin: 10px 0px;
+        width: 100%;
       }
     }
     .insert-buttons {

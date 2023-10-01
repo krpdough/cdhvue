@@ -8,7 +8,7 @@
     </router-link>
     <div class="nav-tabs">
       <router-link to="/reccomend" class='tab-title'><span>Recommend A Deck</span></router-link>
-      <router-link to="/faq" class='tab-title'><span>Resrouces & FAQ</span></router-link>
+      <router-link to="/faq" class='tab-title'><span>Resources & FAQ</span></router-link>
       <router-link v-if="isVerified" to="/edit" class='tab-title'><span>Admin</span></router-link>
       <a href="https://discord.com/invite/T296j3Mw8K" class='tab-title'>Discord</a>
       <span class='tab-title' @click="toggleMode">{{ buttonText }}</span>
@@ -68,11 +68,11 @@ export default {
   },
   methods: {
     isDarkMode() {
-      return Boolean(localStorage.getItem('dark-mode'));
+      return Boolean(Number(localStorage.getItem('dark-mode')));
     },
     toggleMode() {
       this.darkMode = !this.darkMode;
-      localStorage.setItem('dark-mode', this.darkMode);
+      localStorage.setItem('dark-mode', this.darkMode ? 1 : 0);
       document.documentElement.className = this.darkMode ? 'dark-theme' : 'light-theme';
     },
   },
