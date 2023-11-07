@@ -136,7 +136,8 @@ export default {
         manacost: '',
         cmc: '',
         colors: '',
-        maintype: 'Creature'
+        maintype: 'Creature',
+        creator: '',
       },
       card: {},
       cardNames: [],
@@ -193,6 +194,10 @@ export default {
         }, {
           text: 'Loyalty',
           fieldKey: 'loyalty',
+          required: false,
+        }, {
+          text: 'Creator',
+          fieldKey: 'creator',
           required: false,
         },
       ],

@@ -66,7 +66,9 @@ export default {
       type: Boolean,
     },
     relationArray: {
-      required: true,
+      default() {
+        return []
+      },
       type: Array,
     },
   },
@@ -76,7 +78,7 @@ export default {
       localRelation: [],
       relatedOptions: ["related", "reverse-related"],
       typeOptions: ["token", "partner", "transform"],
-      tokens: ['Treasure Token', 'Food Token', 'Clue Token', 'Copy Token', 'Wicked // Cursed', 'Monster // Sorcerer', 'Royal // Young Hero'],
+      tokens: ['Treasure Token', 'Food Token', 'Clue Token', 'Copy Token', 'Wicked // Cursed', 'Monster // Sorcerer', 'Royal // Young Hero', 'Powerstone Token'],
     };
   },
 
