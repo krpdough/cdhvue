@@ -6,14 +6,12 @@
         class="partner-image"
         alt="Secondary Card Image"
         :src=related
-        height="410"
         width="320"
       />
       <img
-        :class="{'card-image': Boolean(related)}"
+        :class="{'card-image-main': Boolean(related), 'card-image-defaults': true}"
         alt="Commander Card Image"
         :src=picurl
-        height="410"
         width="320"
       />
     </router-link>
@@ -80,11 +78,16 @@ export default {
     }
     .card-image-wrapper {
       margin-bottom: 12px;
-      .card-image {
+      .card-image-defaults {
+        border-radius: 4.85%/3.58%;
+        height: unset;
+      }
+      .card-image-main {
         position: relative;
         z-index: 6;
       }
       .partner-image {
+        border-radius: 4.85%/3.58%;
         position: relative;
         top: 0px;
         left: 10x;
