@@ -1,21 +1,20 @@
 <template>
-  <div class='title-section'>
-    <div class='info-banner'>
-      <div class='info-title'>
-        CUSTOM DRAGON HIGHLANDER
-      </div>
-      <div class='info-blurb'>
-        Welcome to Custom Dragon Highlander, a community dedicated to designing only the finest custom commanders!
+  <div class="title-section">
+    <div class="info-banner">
+      <div class="info-title">CUSTOM DRAGON HIGHLANDER</div>
+      <div class="info-blurb">
+        Welcome to Custom Dragon Highlander, a community dedicated to designing
+        only the finest custom commanders!
       </div>
     </div>
-    <div class='title-boxes'>
-      <TitleBox 
+    <div class="title-boxes">
+      <TitleBox
         icon="download"
         text="Here's the latest XML file with all commanders and tokens!"
         button="DOWNLOAD"
         link="https://s3.us-east-2.amazonaws.com/com.cdhrec/xml/current.xml"
       />
-      <TitleBox 
+      <TitleBox
         icon="discord"
         text="Got an idea? Come share it on our Discord server!"
         button="Join"
@@ -26,14 +25,14 @@
 </template>
 
 <script>
-import TitleBox from './TitleBox.vue'
+import TitleBox from "./TitleBox.vue";
 
 export default {
-  name: 'TitleSection',
+  name: "TitleSection",
   components: {
     TitleBox,
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -61,6 +60,10 @@ export default {
   .title-boxes {
     width: 50%;
     display: flex;
+  }
+  .title-boxes a[href*="discord"] {
+    background-color: #7289da;
+    color: #fff;
   }
 }
 @media only screen and (max-width: 720px) {

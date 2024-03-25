@@ -1,19 +1,16 @@
 <template>
-  <div class='title-box'>
-    <img 
-      class="icon"
-      :src="imageSrc"
-    />
-    <span class='title-box__text'>
+  <div class="title-box">
+    <img class="icon" :src="imageSrc" />
+    <span class="title-box__text">
       {{ text }}
     </span>
-    <v-btn class='button' :href="link">{{ button }}</v-btn>
+    <v-btn class="button" :href="link">{{ button }}</v-btn>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'TitleBox',
+  name: "TitleBox",
 
   props: {
     icon: {
@@ -36,10 +33,10 @@ export default {
 
   computed: {
     imageSrc() {
-      return new URL(`../../assets/${this.icon}.svg`, import.meta.url).href
+      return new URL(`../../assets/${this.icon}.svg`, import.meta.url).href;
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">
