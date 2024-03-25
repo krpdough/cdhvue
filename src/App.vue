@@ -1,32 +1,38 @@
 <template>
   <div id="app">
-    <NavBar/>
+    <NavBar />
     <router-view></router-view>
-    <div class='footer'>
-      CDHrec is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC.
-      <br>CDHrec may use the trademarks and other intellectual property of Wizards of the Coast LLC, which is permitted under Wizards' Fan Site Policy. For example, Magic: The Gathering® is a trademark of Wizards of the Coast. For more information about Wizards of the Coast or any of Wizards' trademarks or other intellectual property, please visit their website at magic.wizards.com.
+    <div class="footer">
+      CDHrec is not affiliated with, endorsed, sponsored, or specifically
+      approved by Wizards of the Coast LLC.
+      <br />CDHrec may use the trademarks and other intellectual property of
+      Wizards of the Coast LLC, which is permitted under Wizards' Fan Site
+      Policy. For example, Magic: The Gathering® is a trademark of Wizards of
+      the Coast. For more information about Wizards of the Coast or any of
+      Wizards' trademarks or other intellectual property, please visit their
+      website at magic.wizards.com.
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import NavBar from './components/NavBar.vue';
+import { mapGetters, mapActions } from "vuex";
+import NavBar from "./components/NavBar.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     NavBar,
   },
   computed: {
     ...mapGetters({
-      filteredList: 'cards/GET_FILTERED_LIST',
+      filteredList: "cards/GET_FILTERED_LIST",
     }),
   },
   methods: {
     ...mapActions({
-      fetchCards: 'cards/FETCH_CARDS',
-      buildIndex: 'cards/BUILD_INDEX',
+      fetchCards: "cards/FETCH_CARDS",
+      buildIndex: "cards/BUILD_INDEX",
     }),
   },
   created() {
@@ -35,7 +41,7 @@ export default {
       this.buildIndex();
     }
   },
-}
+};
 </script>
 
 <style>
@@ -73,9 +79,13 @@ body {
   height: 100vh;
   background-color: var(--background-color-primary);
 }
+
 .footer {
-  margin: 15px auto;
-  padding: 20px;
-  font-size: .8rem;
+  display: flex;
+  gap: 0.625rem;
+  margin: 0.625rem 2.5rem;
+  padding: 1rem 3rem 1rem 3rem;
+  font-size: 0.8rem;
+  border-top: 1px solid;
 }
 </style>
