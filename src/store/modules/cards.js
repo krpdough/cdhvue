@@ -59,6 +59,13 @@ const actions = {
     .catch(function (error) {
       console.log('error is', error);
     });
+    
+
+    let new_num = 1;
+    for(let card in cardDict) {
+      cardDict[card].num = new_num;
+      new_num++;
+    }
 
     // Grab the decks
     let deckDict = {}
@@ -97,8 +104,6 @@ const actions = {
           cardDict[relatedUuid].hidden = true;
           cardDict[key].relatedUuid = relatedUuid;
           cardDict[key].relatedPicUrl = cardDict[relatedUuid].picurl;
-        } else {
-          console.log('Warning - related card not found: ', cardDict[key].name, cardDict[key].related)
         }
       }
 

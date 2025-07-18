@@ -58,7 +58,7 @@ export default {
   computed: {
     cardUrl() {
       return `/card/${this.cardId}`;
-    }
+    },
   },
 }
 </script>
