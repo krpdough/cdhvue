@@ -28,11 +28,15 @@ export default {
       if(!this.card.text) {
         return '';
       }
-      const splitText = this.card.text.split(/[{}]/);
+      // Split the {} symbols 
+      const splitText = this.card.text.split(/[{}]+/);
       let returnText = '';
       for(let i=0; i <= splitText.length-1; i++) {
-        if(splitText[i].length > 3) {
+        // If it's greater than 3, it's likely text. But if it starts with a punctuation, we also just append
+        if(splitText[i].length > 3 || !!splitText[i].match(/^[.,:!?]/)) {
           returnText = returnText.concat(splitText[i]);
+        } else if (splitText[i].toLowerCase() === 't') {
+          returnText = returnText.concat(`<i class='ms ms-cost icon-height ms-tap'></i>`);
         } else if (splitText[i].length > 0) {
           returnText = returnText.concat(`<i class='ms ms-cost icon-height ms-${splitText[i].toLowerCase()}'></i>`);
         }
